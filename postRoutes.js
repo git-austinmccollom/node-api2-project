@@ -44,7 +44,7 @@ router.post("/:id/comments", (req, res) => {
     data
       .findById(comment.id)
       .then((findRes) => {
-        if (findRes === []) {
+        if (findRes.length < 1) {
           res
             .status(404)
             .json({
@@ -90,14 +90,15 @@ router.get('/:id', (req, res) => {
 
     data.findById(id)
     .then( findRes => {
-        if (findRes === []) {
+        if (findRes.length < 1) {
             res.status(500).json({ error: "The posts information could not be retrieved." })
         } else {
             res.status(200).json(findRes)
         }
     })
     .then( findErr => {
-        res.status(500).json({ error: "unknown server error" })
+        // res.status(500).json({ error: "unknown server error" });
+        res.status(500).json(findErr);
     })
 })
 
