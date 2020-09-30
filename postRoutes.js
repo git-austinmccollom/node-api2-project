@@ -85,6 +85,22 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get('/:id', (req, res) => {
+    const id = req.params.id;
+
+    data.findById(id)
+    .then( findRes => {
+        if (findRes === []) {
+            res.status(500).json({ error: "The posts information could not be retrieved." })
+        } else {
+            res.status(200).json(findRes)
+        }
+    })
+    .then( findErr => {
+        res.status(500).json({ error: "unknown server error" })
+    })
+})
+
 // router.get('/', (req, res) => {
 //     res.status(200).send({})
 // })
