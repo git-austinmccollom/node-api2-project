@@ -91,7 +91,7 @@ router.get('/:id', (req, res) => {
     data.findById(id)
     .then( findRes => {
         if (findRes.length < 1) {
-            res.status(500).json({ error: "The posts information could not be retrieved." })
+            res.status(404).json({ error: "The posts information could not be retrieved." })
         } else {
             res.status(200).json(findRes)
         }
@@ -102,8 +102,23 @@ router.get('/:id', (req, res) => {
     })
 })
 
-// router.get('/', (req, res) => {
-//     res.status(200).send({})
-// })
+router.get('/:id/comments', (req, res) => {
+    const id = req.params.id;
+
+    data.findPostComments( id )
+    .then( findRes => {
+        if (findRes.length < 1) {
+            res.status(404).json({ message: "The post with the specified ID does not exist." })
+        } else {
+            res.status(200).json(findRes)
+        }
+    })
+    .then( findErr => {
+        // res.status(500).json({ error: "unknown server error" });
+        res.status(500).json(findErr);
+    })
+})
+
+
 
 module.exports = router;
