@@ -119,6 +119,23 @@ router.get('/:id/comments', (req, res) => {
     })
 })
 
+router.delete('/:id', (req, res) => {
+    const id = req.params.id;
+
+    data.remove( id )
+    .then( findRes => {
+        if (findRes.length < 1) {
+            res.status(404).json({ message: "The post with the specified ID does not exist." })
+        } else {
+            res.status(200).json({ message: "post deleted" })
+        }
+    })
+    .then( findErr => {
+        // res.status(500).json({ error: "unknown server error" });
+        res.status(500).json(findErr);
+    })
+})
+
 
 
 module.exports = router;
