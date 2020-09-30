@@ -156,10 +156,8 @@ router.put("/:id", (req, res) => {
     data
       .update(req.params.id, req.body)
       .then((dbRes) => {
-        if (dbRes.length() < 1) {
-          res.status(404).json({
-            message: "error?",
-          });
+        if (dbRes !==  1) {
+          res.status(404).json({ message: "The post with the specified ID does not exist." });
         } else {
           data
             .findById(req.params.id)
