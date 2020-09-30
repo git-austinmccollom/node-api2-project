@@ -3,6 +3,7 @@ const express = require('express');
 const postsRoutes = require('./postRoutes.js');
 
 const server = express();
+server.use(express.json());
 
 server.use('/api/posts', postsRoutes );
 
